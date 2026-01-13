@@ -1,0 +1,323 @@
+/* ===========================
+   FONT & RESET
+=========================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #0d0d0d;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* ===========================
+   SMOKE BACKGROUND (CSS ONLY)
+=========================== */
+.smoke {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.smoke span {
+    position: absolute;
+    bottom: -10%;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, rgba(255,255,255,0.15), transparent);
+    border-radius: 50%;
+    filter: blur(12px);
+    animation: rise 12s linear infinite;
+    opacity: 0.4;
+}
+
+@keyframes rise {
+    0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-120vh) translateX(40px) scale(1.8);
+        opacity: 0;
+    }
+}
+
+/* ===========================
+   PURPLE GLOW EFFECTS
+=========================== */
+.glow {
+    box-shadow: 0 0 12px #a020f0, 0 0 24px #a020f0;
+}
+
+/* ===========================
+   HEADER
+=========================== */
+header {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+    color: #d8b4ff;
+    text-shadow: 0 0 10px #a020f0;
+}
+
+/* ===========================
+   PRODUCT GRID
+=========================== */
+.grid {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+}
+
+@media (min-width: 600px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 900px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.card {
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 12px;
+    transition: 0.3s;
+    border: 1px solid #3a0a5e;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px #a020f0;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+button, .btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Instagram Gradient Button */
+.btn-instagram {
+    background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+    color: #fff;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-instagram:hover {
+    filter: brightness(1.2);
+    box-shadow: 0 0 12px #a020f0;
+}
+
+/* Purple Button */
+.btn-purple {
+    background: #a020f0;
+    color: #fff;
+}
+
+.btn-purple:hover {
+    background: #b44bff;
+    box-shadow: 0 0 12px #a020f0;
+}
+
+/* ===========================
+   FORMS
+=========================== */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    background: #111;
+    border: 1px solid #3a0a5e;
+    border-radius: 8px;
+    color: #fff;
+    margin-top: 10px;
+}
+
+textarea {
+    height: 120px;
+    resize: none;
+}
+
+label {
+    margin-top: 15px;
+    display: block;
+    font-size: 14px;
+    color: #d8b4ff;
+}
+
+/* ===========================
+   ADMIN PANEL
+=========================== */
+.admin-box {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #3a0a5e;
+    box-shadow: 0 0 12px #a020f0;
+}
+
+/* ===========================
+   COMMENTS
+=========================== */
+.comment {
+    background: #111;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 1px solid #3a0a5e;
+}
+
+/* ===========================
+   LOGIN BOX
+=========================== */
+#login-box {
+    max-width: 400px;
+    margin: 80px auto;
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #3a0a5e;
+    box-shadow: 0 0 12px #a020f0;
+    text-align: center;
+}
+
+#login-box h2 {
+    margin-bottom: 20px;
+    color: #d8b4ff;
+}
+
+/* ===========================
+   DASHBOARD LAYOUT
+=========================== */
+#dashboard h2 {
+    color: #d8b4ff;
+    text-shadow: 0 0 10px #a020f0;
+}
+
+/* ===========================
+   IMAGE PREVIEW
+=========================== */
+#preview-box {
+    background: #111;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #3a0a5e;
+    margin-top: 15px;
+}
+
+#preview-img {
+    max-width: 150px;
+    border-radius: 8px;
+    display: block;
+    margin-top: 10px;
+}
+
+/* ===========================
+   FILE INPUT STYLE
+=========================== */
+input[type="file"] {
+    padding: 8px;
+    background: #111;
+    border: 1px dashed #5a1a8a;
+    color: #d8b4ff;
+    cursor: pointer;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    background: #a020f0;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* ===========================
+   ADMIN PRODUCT LIST
+=========================== */
+#admin-products .comment {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#admin-products img {
+    max-width: 80px;
+    border-radius: 6px;
+    margin-top: 5px;
+}
+
+/* ===========================
+   CANCEL EDIT BUTTON
+=========================== */
+.btn-red {
+    background: #b00020;
+    color: #fff;
+}
+
+.btn-red:hover {
+    background: #d00028;
+    box-shadow: 0 0 12px #ff4d6d;
+}
+
+/* ===========================
+   EDIT MODE HIGHLIGHT
+=========================== */
+.editing {
+    border: 2px solid #a020f0 !important;
+    box-shadow: 0 0 15px #a020f0 !important;
+}
+
+/* ===========================
+   ADMIN BOX TITLES
+=========================== */
+.admin-box h3 {
+    color: #d8b4ff;
+    margin-bottom: 10px;
+    text-shadow: 0 0 8px #a020f0;
+}
+
+/* ===========================
+   BUTTON SPACING FIX
+=========================== */
+button + button {
+    margin-top: 10px;
+}

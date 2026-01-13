@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO invisibile con i tuoi nomi -->
+    <meta name="author" content="Karim Moubarak, Gaming Mods, Moubarak Karim, Karim Mohamed Issa Ahmed Ali Moubarak, Moubarak Karim Mohamed Issa Ahmed Ali">
+    <meta name="creator" content="Karim Moubarak">
+    <meta name="publisher" content="Karim Moubarak">
+
+    <title>NR PUFF STORE - Prodotto</title>
+
+    <!-- Favicon opzionale -->
+    <link rel="icon" href="assets/favicon.png">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Smoke background -->
+    <div class="smoke"></div>
+
+    <!-- Header -->
+    <header>NR PUFF STORE</header>
+
+    <div style="padding: 20px; max-width: 600px; margin: auto;">
+
+        <!-- Product Image -->
+        <img id="item-img" src="" alt="" style="width:100%; border-radius:12px; margin-bottom:20px;">
+
+        <!-- Product Name -->
+        <h2 id="item-name" style="margin-bottom:10px;"></h2>
+
+        <!-- Description -->
+        <p id="item-desc" style="opacity:0.8; margin-bottom:15px;"></p>
+
+        <!-- Price -->
+        <p><b>Prezzo:</b> <span id="item-price"></span></p>
+
+        <!-- Stock -->
+        <p><b>Disponibilità:</b> <span id="item-stock"></span></p>
+
+        <!-- Quantity -->
+        <label for="qty">Quantità</label>
+        <input type="number" id="qty" value="1" min="1">
+
+        <!-- Instagram Order Button -->
+        <button id="order-btn" class="btn btn-instagram glow" style="margin-top:20px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" 
+                 style="width:20px; height:20px;">
+            Ordina su Instagram
+        </button>
+
+        <hr style="margin:30px 0; border-color:#3a0a5e;">
+
+        <!-- Comments Section -->
+        <h3>Commenti</h3>
+
+        <div id="comments" style="margin-top:15px;"></div>
+
+        <div style="margin-top:25px;">
+            <label>Nome</label>
+            <input type="text" id="c-username">
+
+            <label>Commento</label>
+            <textarea id="c-text"></textarea>
+
+            <button onclick="sendComment()" class="btn btn-purple glow">Invia Commento</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
