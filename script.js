@@ -435,3 +435,37 @@ document.addEventListener("DOMContentLoaded", () => {
         loadItemPage();
     }
 });
+async function loadHomePage() {
+    const grid = document.getElementById("home-grid");
+    if (!grid) return;
+
+    const products = await apiGet("/items");
+
+    grid.innerHTML = "";
+
+    products.forEach(p => {
+        grid.innerHTML += `
+            <div class="card" onclick="location.href='item.html?id=${p.id}'">
+                <img src="${p.image}" class="card-img">
+                <h3>${p.name}</h3>
+                <p>${p.price}€</p>
+            </div>
+        `;
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const path = window.location.pathname;
+
+    if (path.includes("index") || path.endsWith("/") || path.endsWith("NR-PUFF-STORE") || path.endsWith("NR-PUFF-STORE/")) {
+        loadHomePage();
+    }
+
+    if (path.includes("admin")) {
+        initAdminPage();
+    }
+
+    if (path.includes("item")) {
+        loadItemPage();
+    }
+});
