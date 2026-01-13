@@ -73,16 +73,16 @@
             <label>Oppure URL immagine</label>
             <input type="text" id="p-image">
 
-            <div id="preview-box">
+            <div id="preview-box" style="display:none;">
                 <p>Anteprima:</p>
-                <img id="preview-img" src="">
+                <img id="preview-img" src="" style="max-width:150px; border-radius:8px;">
             </div>
 
             <button onclick="submitItem()" class="btn btn-purple glow">
                 Salva
             </button>
 
-            <button onclick="resetForm()" class="btn btn-red glow" id="cancel-edit">
+            <button onclick="resetForm()" class="btn btn-red glow" id="cancel-edit" style="display:none;">
                 Annulla Modifica
             </button>
         </div>
@@ -95,6 +95,7 @@
 
     </div>
 
+    <!-- NEW FULL JS FILE -->
     <script src="script.js"></script>
 </body>
 </html>
