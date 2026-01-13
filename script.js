@@ -334,7 +334,97 @@ function onQuantityChange(item) {
 }
 
 function updateOrderButton(item, qty) {
-    const orderBtn = document.getElementById("order-btn");
+    const orderBtn = document.getElementById("order-basync function loadComments(itemId) {
+    const box = document.getElementById("comments");
+    if (!box) return;
+
+    let comments = [];
+
+    try {
+        const res = await fetch(`${API}/comments/${itemId}`);
+        const data = await res.json();
+
+        // 🔥 Always convert to array
+        comments = Array.isArray(data) ? data : [];
+    } catch (err) {
+        console.error("Failed to load comments:", err);
+        comments = [];
+    }
+
+    box.innerHTML = "";
+
+    if (comments.length === 0) {
+        box.innerHTML = "<p>No comments yet.</p>";
+        return;
+    }
+
+    comments.forEach(c => {
+        const div = document.createElement("div");
+        div.className = "comment-box";
+        div.innerHTML = `
+            <b>${c.username}</b> <span style="opacity:0.6;">(${c.date})</span>
+            <p>${c.comment}</p>
+            <hr>
+        `;
+        box.appendChild(div);
+    });
+}
+
+
+async function sendComment() {
+    const nameInput = document.getElementById("c-username");
+    const textInput = document.getElementById("c-text");
+    const box = document.getElementById("comments");
+
+    if (!nameInput || !textInput || !box || !currentItemId) return;
+
+    const username = nameInput.value.trim();
+    const comment = textInput.value.trim();
+
+    if (!username || !comment) {
+        alert("Enter your name and comment");
+        return;
+    }
+
+    let updatedComments = [];
+
+    try {
+        const res = await fetch(`${API}/comments/${currentItemId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, comment })
+        });
+
+        const data = await res.json();
+
+        // 🔥 Always convert to array
+        updatedComments = Array.isArray(data) ? data : [];
+    } catch (err) {
+        console.error("Failed to send comment:", err);
+        updatedComments = [];
+    }
+
+    box.innerHTML = "";
+
+    if (updatedComments.length === 0) {
+        box.innerHTML = "<p>No comments yet.</p>";
+        return;
+    }
+
+    updatedComments.forEach(c => {
+        const div = document.createElement("div");
+        div.className = "comment-box";
+        div.innerHTML = `
+            <b>${c.username}</b> <span style="opacity:0.6;">(${c.date})</span>
+            <p>${c.comment}</p>
+            <hr>
+        `;
+        box.appendChild(div);
+    });
+
+    nameInput.value = "";
+    textInput.value = "";
+}tn");
     if (!orderBtn) return;
 
     const total = qty * item.price;
@@ -355,70 +445,7 @@ function updateOrderButton(item, qty) {
 // ======================
 // COMMENTS (ITEM PAGE)
 // ======================
-async function loadComments(itemId) {
-    const box = document.getElementById("comments");
-    if (!box) return;
 
-    const res = await fetch(`${API}/comments/${itemId}`);
-    const comments = await res.json();
-
-    box.innerHTML = "";
-
-    if (!comments || comments.length === 0) {
-        box.innerHTML = "<p>No comments yet.</p>";
-        return;
-    }
-
-    comments.forEach(c => {
-        const div = document.createElement("div");
-        div.className = "comment-box";
-        div.innerHTML = `
-            <b>${c.username}</b> <span style="opacity:0.6;">(${c.date})</span>
-            <p>${c.comment}</p>
-            <hr>
-        `;
-        box.appendChild(div);
-    });
-}
-
-async function sendComment() {
-    const nameInput = document.getElementById("c-username");
-    const textInput = document.getElementById("c-text");
-    const box = document.getElementById("comments");
-
-    if (!nameInput || !textInput || !box || !currentItemId) return;
-
-    const username = nameInput.value.trim();
-    const comment = textInput.value.trim();
-
-    if (!username || !comment) {
-        alert("Enter your name and comment");
-        return;
-    }
-
-    const res = await fetch(`${API}/comments/${currentItemId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, comment })
-    });
-
-    const updatedComments = await res.json();
-
-    box.innerHTML = "";
-    updatedComments.forEach(c => {
-        const div = document.createElement("div");
-        div.className = "comment-box";
-        div.innerHTML = `
-            <b>${c.username}</b> <span style="opacity:0.6;">(${c.date})</span>
-            <p>${c.comment}</p>
-            <hr>
-        `;
-        box.appendChild(div);
-    });
-
-    nameInput.value = "";
-    textInput.value = "";
-}
 
 
 // ======================
