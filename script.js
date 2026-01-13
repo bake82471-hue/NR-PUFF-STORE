@@ -410,8 +410,6 @@ async function sendComment() {
         });
 
         const data = await res.json();
-
-        // 🔥 Always convert to array
         updatedComments = Array.isArray(data) ? data : [];
     } catch (err) {
         console.error("Failed to send comment:", err);
@@ -438,28 +436,7 @@ async function sendComment() {
 
     nameInput.value = "";
     textInput.value = "";
-}tn");
-    if (!orderBtn) return;
-
-    const total = qty * item.price;
-    orderBtn.innerText = `Ordina su Instagram (${qty} x ${item.price}€ = ${total}€)`;
-
-    orderBtn.onclick = () => {
-        if (!INSTAGRAM_USER) {
-            alert("Instagram username is not configured yet.");
-            return;
-        }
-
-        // Instagram doesn't support pre-filled text officially; we just open the profile.
-        window.location.href = `https://instagram.com/${INSTAGRAM_USER}`;
-    };
 }
-
-
-// ======================
-// COMMENTS (ITEM PAGE)
-// ======================
-
 
 
 // ======================
@@ -476,6 +453,8 @@ document.addEventListener("DOMContentLoaded", () => {
         loadItemPage();
     }
 });
+
+
 async function loadHomePage() {
     const grid = document.getElementById("home-grid");
     if (!grid) return;
@@ -495,10 +474,16 @@ async function loadHomePage() {
     });
 }
 
+
 document.addEventListener("DOMContentLoaded", () => {
     const path = window.location.pathname;
 
-    if (path.includes("index") || path.endsWith("/") || path.endsWith("NR-PUFF-STORE") || path.endsWith("NR-PUFF-STORE/")) {
+    if (
+        path.includes("index") ||
+        path.endsWith("/") ||
+        path.endsWith("NR-PUFF-STORE") ||
+        path.endsWith("NR-PUFF-STORE/")
+    ) {
         loadHomePage();
     }
 
