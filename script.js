@@ -334,7 +334,23 @@ function onQuantityChange(item) {
 }
 
 function updateOrderButton(item, qty) {
-    const orderBtn = document.getElementById("order-basync function loadComments(itemId) {
+    const orderBtn = document.getElementById("order-btn");
+    if (!orderBtn) return;
+
+    const total = qty * item.price;
+    orderBtn.innerText = `Ordina su Instagram (${qty} x ${item.price}€ = ${total}€)`;
+
+    orderBtn.onclick = () => {
+        if (!INSTAGRAM_USER) {
+            alert("Instagram username is not configured yet.");
+            return;
+        }
+
+        window.location.href = `https://instagram.com/${INSTAGRAM_USER}`;
+    };
+}
+
+async function loadComments(itemId) {
     const box = document.getElementById("comments");
     if (!box) return;
 
@@ -343,8 +359,6 @@ function updateOrderButton(item, qty) {
     try {
         const res = await fetch(`${API}/comments/${itemId}`);
         const data = await res.json();
-
-        // 🔥 Always convert to array
         comments = Array.isArray(data) ? data : [];
     } catch (err) {
         console.error("Failed to load comments:", err);
