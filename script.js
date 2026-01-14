@@ -150,12 +150,14 @@ async function uploadImageIfNeeded() {
 
     const res = await fetch(API + "/upload", {
         method: "POST",
-        headers: { "Authorization": localStorage.getItem("token") || "" },
+        headers: {
+            "Authorization": "Bearer " + (localStorage.getItem("token") || "")
+        },
         body: formData
     });
 
     const data = await res.json();
-    return data.url; // backend must return { url: "https://..." }
+    return data.url;
 }
 
 async function addItem() {
