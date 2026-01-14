@@ -10,14 +10,24 @@
     font-family: 'Poppins', sans-serif;
 }
 
+/* ===========================
+   GLOBAL LIGHT MODE
+=========================== */
 body {
-    background: #0d0d0d;
-    color: #fff;
+    background: #f7f7f9;
+    color: #222;
     overflow-x: hidden;
+    animation: bodyFadeIn 0.6s ease;
+}
+
+@keyframes bodyFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* ===========================
-   SMOKE BACKGROUND (CSS ONLY)
+   SMOKE / PARTICLE BACKGROUND
+   (LIGHT MODE VERSION)
 =========================== */
 .smoke {
     position: fixed;
@@ -35,20 +45,20 @@ body {
     bottom: -10%;
     width: 40px;
     height: 40px;
-    background: radial-gradient(circle, rgba(255,255,255,0.15), transparent);
+    background: radial-gradient(circle, rgba(160,32,240,0.15), transparent);
     border-radius: 50%;
-    filter: blur(12px);
+    filter: blur(18px);
     animation: rise 12s linear infinite;
-    opacity: 0.4;
+    opacity: 0.5;
 }
 
 @keyframes rise {
     0% {
         transform: translateY(0) translateX(0) scale(1);
-        opacity: 0.3;
+        opacity: 0.35;
     }
     50% {
-        opacity: 0.6;
+        opacity: 0.7;
     }
     100% {
         transform: translateY(-120vh) translateX(40px) scale(1.8);
@@ -60,7 +70,9 @@ body {
    PURPLE GLOW EFFECTS
 =========================== */
 .glow {
-    box-shadow: 0 0 12px #a020f0, 0 0 24px #a020f0;
+    box-shadow:
+        0 0 12px rgba(160,32,240,0.35),
+        0 0 24px rgba(160,32,240,0.18);
 }
 
 /* ===========================
@@ -72,8 +84,8 @@ header {
     text-align: center;
     font-size: 26px;
     font-weight: 600;
-    color: #d8b4ff;
-    text-shadow: 0 0 10px #a020f0;
+    color: #7a3cff;
+    text-shadow: 0 0 8px rgba(160,32,240,0.25);
 }
 
 /* ===========================
@@ -81,8 +93,8 @@ header {
 =========================== */
 .grid {
     display: grid;
-    gap: 20px;
-    padding: 20px;
+    gap: 24px;
+    padding: 24px;
 }
 
 @media (min-width: 600px) {
@@ -97,36 +109,102 @@ header {
     }
 }
 
+/* ===========================
+   PRODUCT CARD (LIGHT MODE + ANIMATIONS)
+=========================== */
 .card {
-    background: #1a1a1a;
-    padding: 15px;
-    border-radius: 12px;
-    transition: 0.3s;
-    border: 1px solid #3a0a5e;
+    background: #ffffff;
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid #e3e3ed;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animated gradient shine on hover */
+.card::before {
+    content: "";
+    position: absolute;
+    top: -120%;
+    left: -120%;
+    width: 260%;
+    height: 260%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(160,32,240,0.08),
+        transparent
+    );
+    transform: rotate(20deg);
+    transition: 0.7s ease;
+    pointer-events: none;
+}
+
+.card:hover::before {
+    top: 0;
+    left: 0;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 15px #a020f0;
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+    border-color: rgba(160,32,240,0.45);
 }
 
 .card img {
     width: 100%;
-    border-radius: 10px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    object-fit: cover;
+}
+
+/* Optional: if you use titles/prices inside cards */
+.card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #222;
+}
+
+.card-subtitle {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.card-price {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ff4d4d;
+    margin-bottom: 10px;
 }
 
 /* ===========================
    BUTTONS
 =========================== */
-button, .btn {
+button,
+.btn {
     width: 100%;
     padding: 12px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 16px;
     margin-top: 10px;
     cursor: pointer;
-    transition: 0.3s;
+    transition:
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.1s ease;
+}
+
+button:active,
+.btn:active {
+    transform: scale(0.97);
 }
 
 /* Instagram Gradient Button */
@@ -141,32 +219,64 @@ button, .btn {
 }
 
 .btn-instagram:hover {
-    filter: brightness(1.2);
-    box-shadow: 0 0 12px #a020f0;
+    filter: brightness(1.1);
+    box-shadow: 0 0 14px rgba(160,32,240,0.45);
 }
 
 /* Purple Button */
 .btn-purple {
-    background: #a020f0;
+    background: #7a3cff;
     color: #fff;
+    font-weight: 600;
 }
 
 .btn-purple:hover {
-    background: #b44bff;
-    box-shadow: 0 0 12px #a020f0;
+    background: #9b63ff;
+    box-shadow: 0 0 14px rgba(160,32,240,0.45);
+}
+
+/* Red / danger button (for cancel, delete, etc.) */
+.btn-red {
+    background: #e03131;
+    color: #fff;
+}
+
+.btn-red:hover {
+    background: #ff4b4b;
+    box-shadow: 0 0 12px rgba(255,77,109,0.55);
+}
+
+/* Space between buttons when stacked */
+button + button,
+.btn + .btn {
+    margin-top: 10px;
 }
 
 /* ===========================
    FORMS
 =========================== */
-input, textarea {
+input,
+textarea {
     width: 100%;
     padding: 10px;
-    background: #111;
-    border: 1px solid #3a0a5e;
+    background: #ffffff;
+    border: 1px solid #dcdcdc;
     border-radius: 8px;
-    color: #fff;
+    color: #222;
     margin-top: 10px;
+    font-size: 0.95rem;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #7a3cff;
+    box-shadow: 0 0 0 3px rgba(122,60,255,0.18);
+    background: #fbf9ff;
 }
 
 textarea {
@@ -178,7 +288,32 @@ label {
     margin-top: 15px;
     display: block;
     font-size: 14px;
-    color: #d8b4ff;
+    color: #555;
+}
+
+/* ===========================
+   FILE INPUT STYLE
+=========================== */
+input[type="file"] {
+    padding: 8px;
+    background: #ffffff;
+    border: 1px dashed #b88cff;
+    color: #7a3cff;
+    cursor: pointer;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    background: #7a3cff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+    background: #9b63ff;
 }
 
 /* ===========================
@@ -187,22 +322,28 @@ label {
 .admin-box {
     max-width: 500px;
     margin: 40px auto;
-    background: #1a1a1a;
+    background: #ffffff;
     padding: 20px;
-    border-radius: 12px;
-    border: 1px solid #3a0a5e;
-    box-shadow: 0 0 12px #a020f0;
+    border-radius: 16px;
+    border: 1px solid #e3e3ed;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.admin-box h3 {
+    color: #7a3cff;
+    margin-bottom: 10px;
+    text-shadow: none;
 }
 
 /* ===========================
    COMMENTS
 =========================== */
 .comment {
-    background: #111;
+    background: #fafafa;
     padding: 12px;
-    border-radius: 8px;
+    border-radius: 10px;
     margin-top: 10px;
-    border: 1px solid #3a0a5e;
+    border: 1px solid #e3e3ed;
 }
 
 /* ===========================
@@ -211,35 +352,35 @@ label {
 #login-box {
     max-width: 400px;
     margin: 80px auto;
-    background: #1a1a1a;
+    background: #ffffff;
     padding: 25px;
-    border-radius: 12px;
-    border: 1px solid #3a0a5e;
-    box-shadow: 0 0 12px #a020f0;
+    border-radius: 16px;
+    border: 1px solid #e3e3ed;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
     text-align: center;
 }
 
 #login-box h2 {
     margin-bottom: 20px;
-    color: #d8b4ff;
+    color: #7a3cff;
 }
 
 /* ===========================
    DASHBOARD LAYOUT
 =========================== */
 #dashboard h2 {
-    color: #d8b4ff;
-    text-shadow: 0 0 10px #a020f0;
+    color: #7a3cff;
+    text-shadow: none;
 }
 
 /* ===========================
    IMAGE PREVIEW
 =========================== */
 #preview-box {
-    background: #111;
+    background: #f4f2ff;
     padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #3a0a5e;
+    border-radius: 10px;
+    border: 1px solid #d6c7ff;
     margin-top: 15px;
 }
 
@@ -248,26 +389,6 @@ label {
     border-radius: 8px;
     display: block;
     margin-top: 10px;
-}
-
-/* ===========================
-   FILE INPUT STYLE
-=========================== */
-input[type="file"] {
-    padding: 8px;
-    background: #111;
-    border: 1px dashed #5a1a8a;
-    color: #d8b4ff;
-    cursor: pointer;
-}
-
-input[type="file"]::-webkit-file-upload-button {
-    background: #a020f0;
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
 }
 
 /* ===========================
@@ -281,38 +402,16 @@ input[type="file"]::-webkit-file-upload-button {
 
 #admin-products img {
     max-width: 80px;
-    border-radius: 6px;
+    border-radius: 8px;
     margin-top: 5px;
-}
-
-/* ===========================
-   CANCEL EDIT BUTTON
-=========================== */
-.btn-red {
-    background: #b00020;
-    color: #fff;
-}
-
-.btn-red:hover {
-    background: #d00028;
-    box-shadow: 0 0 12px #ff4d6d;
 }
 
 /* ===========================
    EDIT MODE HIGHLIGHT
 =========================== */
 .editing {
-    border: 2px solid #a020f0 !important;
-    box-shadow: 0 0 15px #a020f0 !important;
-}
-
-/* ===========================
-   ADMIN BOX TITLES
-=========================== */
-.admin-box h3 {
-    color: #d8b4ff;
-    margin-bottom: 10px;
-    text-shadow: 0 0 8px #a020f0;
+    border: 2px solid #7a3cff !important;
+    box-shadow: 0 0 16px rgba(160,32,240,0.6) !important;
 }
 
 /* ===========================
