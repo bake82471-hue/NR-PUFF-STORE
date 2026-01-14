@@ -3,8 +3,9 @@
 // ======================
 const API = "https://nr-store-backend.onrender.com";
 
-let INSTAGRAM_USER = null;      // Loaded from /settings
-let currentItemId = null;       // Used on item page
+let INSTAGRAM_USER = null;
+let currentItemId = null;
+let editingId = null;
 
 
 // ======================
@@ -32,13 +33,8 @@ async function apiAuth(url, method, body) {
 // ADMIN AUTH
 // ======================
 async function adminLogin() {
-    const userInput = document.getElementById("admin-user");
-    const passInput = document.getElementById("admin-pass");
-
-    if (!userInput || !passInput) return;
-
-    const username = userInput.value;
-    const password = passInput.value;
+    const username = document.getElementById("admin-user")?.value;
+    const password = document.getElementById("admin-pass")?.value;
 
     const res = await fetch(API + "/admin/login", {
         method: "POST",
@@ -50,7 +46,10 @@ async function adminLogin() {
 
     if (data.token) {
         localStorage.setItem("token", data.token);
-        location.reload();
+
+        // Smooth fade transition
+        document.body.style.opacity = "0";
+        setTimeout(() => location.reload(), 200);
     } else {
         alert("Wrong credentials");
     }
@@ -60,13 +59,16 @@ function initAdminPage() {
     const loginBox = document.getElementById("login-box");
     const dashboard = document.getElementById("dashboard");
 
-    if (!loginBox || !dashboard) return;
-
     const token = localStorage.getItem("token");
 
     if (token) {
         loginBox.style.display = "none";
         dashboard.style.display = "block";
+
+        // Fade-in animation
+        dashboard.style.opacity = "0";
+        setTimeout(() => dashboard.style.opacity = "1", 50);
+
         loadAdminProducts();
         loadInstagramSetting();
     } else {
@@ -77,7 +79,7 @@ function initAdminPage() {
 
 
 // ======================
-// INSTAGRAM SETTINGS (ADMIN)
+// INSTAGRAM SETTINGS
 // ======================
 async function loadInstagramSetting() {
     const instaInput = document.getElementById("insta-user");
@@ -98,38 +100,29 @@ async function saveInstagram() {
     await apiAuth("/settings", "PUT", {
         instagram_username: instaInput.value
     });
-    alert("Saved");
+
+    // Animated confirmation
+    instaInput.style.boxShadow = "0 0 12px #7a3cff";
+    setTimeout(() => instaInput.style.boxShadow = "none", 600);
 }
 
 
 // ======================
-// PRODUCT MANAGEMENT (ADMIN)
+// PRODUCT MANAGEMENT
 // ======================
-let editingId = null;
-
 function resetForm() {
     editingId = null;
 
-    const title = document.getElementById("form-title");
-    const cancelBtn = document.getElementById("cancel-edit");
-    const nameInput = document.getElementById("p-name");
-    const descInput = document.getElementById("p-desc");
-    const priceInput = document.getElementById("p-price");
-    const stockInput = document.getElementById("p-stock");
-    const imageInput = document.getElementById("p-image");
-    const fileInput = document.getElementById("p-image-file");
+    document.getElementById("form-title").innerText = "Aggiungi Prodotto";
+    document.getElementById("cancel-edit").style.display = "none";
+
+    ["p-name", "p-desc", "p-price", "p-stock", "p-image", "p-image-file"]
+        .forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = "";
+        });
+
     const previewBox = document.getElementById("preview-box");
-
-    if (title) title.innerText = "Aggiungi Prodotto";
-    if (cancelBtn) cancelBtn.style.display = "none";
-
-    if (nameInput) nameInput.value = "";
-    if (descInput) descInput.value = "";
-    if (priceInput) priceInput.value = "";
-    if (stockInput) stockInput.value = "";
-    if (imageInput) imageInput.value = "";
-    if (fileInput) fileInput.value = "";
-
     if (previewBox) previewBox.style.display = "none";
 }
 
@@ -211,21 +204,29 @@ async function loadAdminProducts() {
     const products = await apiGet("/items");
     box.innerHTML = "";
 
-    products.forEach(p => {
-        box.innerHTML += `
-            <div class="comment">
-                <b>${p.name}</b><br>
-                Prezzo: ${p.price}€<br>
-                Stock: ${p.stock}<br>
-                ${p.image ? `<img src="${p.image}" style="max-width:80px; margin-top:5px; border-radius:6px;"><br>` : ""}
-                <button onclick="editItem(${p.id})" class="btn btn-purple glow" style="margin-top:10px;">
-                    Modifica
-                </button>
-                <button onclick="deleteItem(${p.id})" class="btn btn-red glow" style="margin-top:10px;">
-                    Elimina
-                </button>
-            </div>
+    products.forEach((p, i) => {
+        const div = document.createElement("div");
+        div.className = "comment glow";
+        div.style.opacity = "0";
+        div.style.transform = "translateY(10px)";
+        div.style.transition = "0.3s ease";
+
+        div.innerHTML = `
+            <b>${p.name}</b><br>
+            Prezzo: ${p.price}€<br>
+            Stock: ${p.stock}<br>
+            ${p.image ? `<img src="${p.image}" style="max-width:80px; margin-top:5px; border-radius:6px;"><br>` : ""}
+            <button onclick="editItem(${p.id})" class="btn btn-purple glow" style="margin-top:10px;">Modifica</button>
+            <button onclick="deleteItem(${p.id})" class="btn btn-red glow" style="margin-top:10px;">Elimina</button>
         `;
+
+        box.appendChild(div);
+
+        // Staggered fade-in animation
+        setTimeout(() => {
+            div.style.opacity = "1";
+            div.style.transform = "translateY(0)";
+        }, i * 80);
     });
 }
 
@@ -233,27 +234,24 @@ async function editItem(id) {
     const item = await apiGet("/items/" + id);
     editingId = id;
 
-    const title = document.getElementById("form-title");
-    const cancelBtn = document.getElementById("cancel-edit");
-    const nameInput = document.getElementById("p-name");
-    const descInput = document.getElementById("p-desc");
-    const priceInput = document.getElementById("p-price");
-    const stockInput = document.getElementById("p-stock");
-    const imageInput = document.getElementById("p-image");
+    document.getElementById("form-title").innerText = "Modifica Prodotto";
+    document.getElementById("cancel-edit").style.display = "inline-block";
+
+    document.getElementById("p-name").value = item.name;
+    document.getElementById("p-desc").value = item.description;
+    document.getElementById("p-price").value = item.price;
+    document.getElementById("p-stock").value = item.stock;
+    document.getElementById("p-image").value = item.image || "";
+
     const previewImg = document.getElementById("preview-img");
     const previewBox = document.getElementById("preview-box");
 
-    if (title) title.innerText = "Modifica Prodotto";
-    if (cancelBtn) cancelBtn.style.display = "inline-block";
-
-    if (nameInput) nameInput.value = item.name;
-    if (descInput) descInput.value = item.description;
-    if (priceInput) priceInput.value = item.price;
-    if (stockInput) stockInput.value = item.stock;
-    if (imageInput) imageInput.value = item.image || "";
-
-    if (previewImg && item.image) previewImg.src = item.image;
-    if (previewBox && item.image) previewBox.style.display = "block";
+    if (item.image) {
+        previewImg.src = item.image;
+        previewBox.style.display = "block";
+        previewBox.style.opacity = "0";
+        setTimeout(() => previewBox.style.opacity = "1", 50);
+    }
 }
 
 async function deleteItem(id) {
@@ -264,34 +262,24 @@ async function deleteItem(id) {
 
 
 // ======================
-// ITEM PAGE: PRODUCT + QUANTITY + INSTAGRAM
+// ITEM PAGE
 // ======================
 async function loadInstagramUserForItem() {
     try {
         const settings = await apiGet("/settings");
         INSTAGRAM_USER = settings.instagram_username || null;
-    } catch (err) {
-        console.error("Failed to load Instagram user for item page", err);
+    } catch {
         INSTAGRAM_USER = null;
     }
 }
 
 function getItemIdFromURL() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("id");
+    return new URLSearchParams(window.location.search).get("id");
 }
 
 async function loadItemPage() {
     const imgEl = document.getElementById("item-img");
-    const nameEl = document.getElementById("item-name");
-    const descEl = document.getElementById("item-desc");
-    const priceEl = document.getElementById("item-price");
-    const stockEl = document.getElementById("item-stock");
-    const qtyInput = document.getElementById("qty");
-    const orderBtn = document.getElementById("order-btn");
-
-    // If these don't exist, we're not on the item page
-    if (!imgEl || !nameEl || !descEl || !priceEl || !stockEl || !qtyInput || !orderBtn) return;
+    if (!imgEl) return;
 
     currentItemId = getItemIdFromURL();
     if (!currentItemId) return;
@@ -300,10 +288,13 @@ async function loadItemPage() {
     await loadInstagramUserForItem();
 
     imgEl.src = item.image || "";
-    nameEl.innerText = item.name;
-    descEl.innerText = item.description;
-    priceEl.innerText = item.price + "€";
-    stockEl.innerText = item.stock;
+    document.getElementById("item-name").innerText = item.name;
+    document.getElementById("item-desc").innerText = item.description;
+    document.getElementById("item-price").innerText = item.price + "€";
+    document.getElementById("item-stock").innerText = item.stock;
+
+    const qtyInput = document.getElementById("qty");
+    const orderBtn = document.getElementById("order-btn");
 
     qtyInput.value = 1;
     qtyInput.min = 1;
@@ -315,19 +306,23 @@ async function loadItemPage() {
         orderBtn.innerText = "Out of stock";
         orderBtn.disabled = true;
     } else {
-        updateOrderButton(item, parseInt(qtyInput.value, 10));
+        updateOrderButton(item, 1);
         qtyInput.addEventListener("input", () => onQuantityChange(item));
     }
 
-    // Load comments for this item
     loadComments(currentItemId);
+
+    // Fade-in animation
+    document.getElementById("item-container").style.opacity = "0";
+    setTimeout(() => {
+        document.getElementById("item-container").style.opacity = "1";
+    }, 50);
 }
 
 function onQuantityChange(item) {
     const qtyInput = document.getElementById("qty");
-    if (!qtyInput) return;
-
     let qty = parseInt(qtyInput.value, 10);
+
     if (isNaN(qty) || qty < 1) qty = 1;
     if (qty > item.stock) qty = item.stock;
 
@@ -337,9 +332,8 @@ function onQuantityChange(item) {
 
 function updateOrderButton(item, qty) {
     const orderBtn = document.getElementById("order-btn");
-    if (!orderBtn) return;
-
     const total = qty * item.price;
+
     orderBtn.innerText = `Ordina su Instagram (${qty} x ${item.price}€ = ${total}€)`;
 
     orderBtn.onclick = () => {
@@ -347,11 +341,14 @@ function updateOrderButton(item, qty) {
             alert("Instagram username is not configured yet.");
             return;
         }
-
         window.location.href = `https://instagram.com/${INSTAGRAM_USER}`;
     };
 }
 
+
+// ======================
+// COMMENTS
+// ======================
 async function loadComments(itemId) {
     const box = document.getElementById("comments");
     if (!box) return;
@@ -360,42 +357,43 @@ async function loadComments(itemId) {
 
     try {
         const res = await fetch(`${API}/comments/${itemId}`);
-        const data = await res.json();
-        comments = Array.isArray(data) ? data : [];
-    } catch (err) {
-        console.error("Failed to load comments:", err);
+        comments = await res.json();
+    } catch {
         comments = [];
     }
 
     box.innerHTML = "";
 
-    if (comments.length === 0) {
+    if (!Array.isArray(comments) || comments.length === 0) {
         box.innerHTML = "<p>No comments yet.</p>";
         return;
     }
 
-    comments.forEach(c => {
+    comments.forEach((c, i) => {
         const div = document.createElement("div");
         div.className = "comment-box";
+        div.style.opacity = "0";
+        div.style.transform = "translateY(10px)";
+        div.style.transition = "0.3s ease";
+
         div.innerHTML = `
             <b>${c.username}</b> <span style="opacity:0.6;">(${c.date})</span>
             <p>${c.comment}</p>
             <hr>
         `;
+
         box.appendChild(div);
+
+        setTimeout(() => {
+            div.style.opacity = "1";
+            div.style.transform = "translateY(0)";
+        }, i * 80);
     });
 }
 
-
 async function sendComment() {
-    const nameInput = document.getElementById("c-username");
-    const textInput = document.getElementById("c-text");
-    const box = document.getElementById("comments");
-
-    if (!nameInput || !textInput || !box || !currentItemId) return;
-
-    const username = nameInput.value.trim();
-    const comment = textInput.value.trim();
+    const username = document.getElementById("c-username")?.value.trim();
+    const comment = document.getElementById("c-text")?.value.trim();
 
     if (!username || !comment) {
         alert("Enter your name and comment");
@@ -411,33 +409,50 @@ async function sendComment() {
             body: JSON.stringify({ username, comment })
         });
 
-        const data = await res.json();
-        updatedComments = Array.isArray(data) ? data : [];
-    } catch (err) {
-        console.error("Failed to send comment:", err);
+        updatedComments = await res.json();
+    } catch {
         updatedComments = [];
     }
 
-    box.innerHTML = "";
+    loadComments(currentItemId);
 
-    if (updatedComments.length === 0) {
-        box.innerHTML = "<p>No comments yet.</p>";
-        return;
-    }
+    document.getElementById("c-username").value = "";
+    document.getElementById("c-text").value = "";
+}
 
-    updatedComments.forEach(c => {
+
+// ======================
+// HOME PAGE
+// ======================
+async function loadHomePage() {
+    const grid = document.getElementById("home-grid");
+    if (!grid) return;
+
+    const products = await apiGet("/items");
+    grid.innerHTML = "";
+
+    products.forEach((p, i) => {
         const div = document.createElement("div");
-        div.className = "comment-box";
-        div.innerHTML = `
-            <b>${c.username}</b> <span style="opacity:0.6;">(${c.date})</span>
-            <p>${c.comment}</p>
-            <hr>
-        `;
-        box.appendChild(div);
-    });
+        div.className = "card";
+        div.style.opacity = "0";
+        div.style.transform = "translateY(10px)";
+        div.style.transition = "0.3s ease";
 
-    nameInput.value = "";
-    textInput.value = "";
+        div.onclick = () => location.href = `item.html?id=${p.id}`;
+
+        div.innerHTML = `
+            <img src="${p.image}" class="card-img">
+            <h3>${p.name}</h3>
+            <p>${p.price}€</p>
+        `;
+
+        grid.appendChild(div);
+
+        setTimeout(() => {
+            div.style.opacity = "1";
+            div.style.transform = "translateY(0)";
+        }, i * 80);
+    });
 }
 
 
@@ -447,38 +462,8 @@ async function sendComment() {
 document.addEventListener("DOMContentLoaded", () => {
     const path = window.location.pathname;
 
-    if (path.includes("admin")) {
-        initAdminPage();
-    }
-
-    if (path.includes("item")) {
-        loadItemPage();
-    }
-});
-
-
-async function loadHomePage() {
-    const grid = document.getElementById("home-grid");
-    if (!grid) return;
-
-    const products = await apiGet("/items");
-
-    grid.innerHTML = "";
-
-    products.forEach(p => {
-        grid.innerHTML += `
-            <div class="card" onclick="location.href='item.html?id=${p.id}'">
-                <img src="${p.image}" class="card-img">
-                <h3>${p.name}</h3>
-                <p>${p.price}€</p>
-            </div>
-        `;
-    });
-}
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    const path = window.location.pathname;
+    if (path.includes("admin")) initAdminPage();
+    if (path.includes("item")) loadItemPage();
 
     if (
         path.includes("index") ||
@@ -487,13 +472,5 @@ document.addEventListener("DOMContentLoaded", () => {
         path.endsWith("NR-PUFF-STORE/")
     ) {
         loadHomePage();
-    }
-
-    if (path.includes("admin")) {
-        initAdminPage();
-    }
-
-    if (path.includes("item")) {
-        loadItemPage();
     }
 });
