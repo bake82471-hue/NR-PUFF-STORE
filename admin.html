@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- SEO invisibile -->
     <meta name="author" content="Karim Moubarak, Gaming Mods, Moubarak Karim, Karim Mohamed Issa Ahmed Ali Moubarak, Moubarak Karim Mohamed Issa Ahmed Ali">
     <meta name="creator" content="Karim Moubarak">
     <meta name="publisher" content="Karim Moubarak">
@@ -15,12 +16,14 @@
 </head>
 <body>
 
+    <!-- Animated Background -->
     <div class="smoke"></div>
 
+    <!-- Header -->
     <header>Pannello Admin</header>
 
-    <!-- LOGIN -->
-    <div id="login-box" class="admin-box">
+    <!-- LOGIN BOX -->
+    <div id="login-box" class="admin-box login-container">
         <h2>Accesso Admin</h2>
 
         <label>Username</label>
@@ -35,11 +38,11 @@
     </div>
 
     <!-- DASHBOARD -->
-    <div id="dashboard" style="display:none; max-width:900px; margin:auto;">
+    <div id="dashboard" class="dashboard-container">
 
-        <h2 style="text-align:center;">Dashboard Admin</h2>
+        <h2 class="dashboard-title">Dashboard Admin</h2>
 
-        <!-- Instagram -->
+        <!-- Instagram Settings -->
         <div class="admin-box">
             <h3>Impostazioni Instagram</h3>
 
@@ -73,16 +76,17 @@
             <label>Oppure URL immagine</label>
             <input type="text" id="p-image">
 
-            <div id="preview-box" style="display:none;">
+            <!-- Preview -->
+            <div id="preview-box" class="preview-box">
                 <p>Anteprima:</p>
-                <img id="preview-img" src="" style="max-width:150px; border-radius:8px;">
+                <img id="preview-img" class="preview-img" src="">
             </div>
 
             <button onclick="submitItem()" class="btn btn-purple glow">
                 Salva
             </button>
 
-            <button onclick="resetForm()" class="btn btn-red glow" id="cancel-edit" style="display:none;">
+            <button onclick="resetForm()" class="btn btn-red glow" id="cancel-edit">
                 Annulla Modifica
             </button>
         </div>
@@ -90,7 +94,7 @@
         <!-- Product List -->
         <div class="admin-box">
             <h3>Prodotti Esistenti</h3>
-            <div id="admin-products"></div>
+            <div id="admin-products" class="admin-products"></div>
         </div>
 
     </div>
@@ -98,4 +102,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
