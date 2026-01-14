@@ -4,62 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- SEO invisibile con i tuoi nomi -->
+    <!-- SEO invisibile -->
     <meta name="author" content="Karim Moubarak, Gaming Mods, Moubarak Karim, Karim Mohamed Issa Ahmed Ali Moubarak, Moubarak Karim Mohamed Issa Ahmed Ali">
     <meta name="creator" content="Karim Moubarak">
     <meta name="publisher" content="Karim Moubarak">
 
     <title>NR PUFF STORE - Prodotto</title>
 
-    <!-- Favicon opzionale -->
     <link rel="icon" href="assets/favicon.png">
-
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Smoke background -->
+    <!-- Animated Background -->
     <div class="smoke"></div>
 
     <!-- Header -->
     <header>NR PUFF STORE</header>
 
-    <div style="padding: 20px; max-width: 600px; margin: auto;">
+    <!-- PRODUCT CONTAINER -->
+    <div id="item-container" class="item-container">
 
         <!-- Product Image -->
-        <img id="item-img" src="" alt="" style="width:100%; border-radius:12px; margin-bottom:20px;">
+        <img id="item-img" class="item-img" src="" alt="Prodotto">
 
-        <!-- Product Name -->
-        <h2 id="item-name" style="margin-bottom:10px;"></h2>
+        <!-- Product Title -->
+        <h2 id="item-name" class="item-title"></h2>
 
         <!-- Description -->
-        <p id="item-desc" style="opacity:0.8; margin-bottom:15px;"></p>
+        <p id="item-desc" class="item-desc"></p>
 
-        <!-- Price -->
-        <p><b>Prezzo:</b> <span id="item-price"></span></p>
-
-        <!-- Stock -->
-        <p><b>Disponibilità:</b> <span id="item-stock"></span></p>
+        <!-- Price & Stock -->
+        <div class="item-info">
+            <p><b>Prezzo:</b> <span id="item-price"></span></p>
+            <p><b>Disponibilità:</b> <span id="item-stock"></span></p>
+        </div>
 
         <!-- Quantity -->
-        <label for="qty">Quantità</label>
-        <input type="number" id="qty" value="1" min="1">
+        <div class="qty-box">
+            <label for="qty">Quantità</label>
+            <input type="number" id="qty" value="1" min="1">
+        </div>
 
         <!-- Instagram Order Button -->
-        <button id="order-btn" class="btn btn-instagram glow" style="margin-top:20px;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" 
-                 style="width:20px; height:20px;">
+        <button id="order-btn" class="btn btn-instagram glow order-btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="insta-icon">
             Ordina su Instagram
         </button>
 
-        <hr style="margin:30px 0; border-color:#3a0a5e;">
+        <hr class="divider">
 
         <!-- Comments Section -->
-        <h3>Commenti</h3>
+        <h3 class="comments-title">Commenti</h3>
 
-        <div id="comments" style="margin-top:15px;"></div>
+        <div id="comments" class="comments-box"></div>
 
-        <div style="margin-top:25px;">
+        <!-- Add Comment -->
+        <div class="comment-form">
             <label>Nome</label>
             <input type="text" id="c-username">
 
