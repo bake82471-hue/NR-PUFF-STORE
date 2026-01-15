@@ -23,7 +23,7 @@
     <header>Pannello Admin</header>
 
     <!-- LOGIN BOX -->
-    <div id="login-box" class="admin-box login-container">
+    <div id="login-box" class="admin-box">
         <h2>Accesso Admin</h2>
 
         <label>Username</label>
@@ -32,15 +32,11 @@
         <label>Password</label>
         <input type="password" id="admin-pass">
 
-        <button onclick="adminLogin()" class="btn btn-purple glow">
-            Accedi
-        </button>
+        <button onclick="adminLogin()" class="btn">Accedi</button>
     </div>
 
     <!-- DASHBOARD -->
-    <div id="dashboard" class="dashboard-container">
-
-        <h2 class="dashboard-title">Dashboard Admin</h2>
+    <div id="dashboard" style="display:none;">
 
         <!-- Instagram Settings -->
         <div class="admin-box">
@@ -49,9 +45,7 @@
             <label>Username Instagram</label>
             <input type="text" id="insta-user">
 
-            <button onclick="saveInstagram()" class="btn btn-purple glow">
-                Salva Username
-            </button>
+            <button onclick="saveInstagram()" class="btn">Salva Username</button>
         </div>
 
         <!-- Add / Edit Product -->
@@ -77,18 +71,13 @@
             <input type="text" id="p-image">
 
             <!-- Preview -->
-            <div id="preview-box" class="preview-box">
+            <div id="preview-box" style="display:none;">
                 <p>Anteprima:</p>
-                <img id="preview-img" class="preview-img" src="">
+                <img id="preview-img" src="">
             </div>
 
-            <button onclick="submitItem()" class="btn btn-purple glow">
-                Salva
-            </button>
-
-            <button onclick="resetForm()" class="btn btn-red glow" id="cancel-edit">
-                Annulla Modifica
-            </button>
+            <button onclick="submitItem()" class="btn">Salva</button>
+            <button onclick="resetForm()" class="btn btn-red" id="cancel-edit" style="display:none;">Annulla Modifica</button>
         </div>
 
         <!-- Product List -->
