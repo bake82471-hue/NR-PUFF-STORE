@@ -1,4 +1,29 @@
 /* ============================================================
+   LIVE BACKGROUND — ANIMATED GRADIENT WAVES (MEDIUM SPEED)
+============================================================ */
+body {
+    background: linear-gradient(120deg, #6a00ff, #8a2be2, #4b0082, #6a00ff);
+    background-size: 400% 400%;
+    animation: gradientFlow 12s ease infinite;
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Optional: stronger glow behind content */
+.live-glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 70%, rgba(160,32,240,0.25), transparent 60%);
+    z-index: -1;
+}
+
+
+/* ============================================================
    GLOBAL SETTINGS — HYBRID NEUMORPHISM + PURPLE GLOW
 ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
