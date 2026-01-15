@@ -4,7 +4,9 @@
 body {
     background: linear-gradient(120deg, #6a00ff, #8a2be2, #4b0082, #6a00ff);
     background-size: 400% 400%;
-    animation: gradientFlow 12s ease infinite;
+    animation: gradientFlow 12s ease infinite, fadeIn 0.6s ease;
+    color: #fff;
+    overflow-x: hidden;
 }
 
 @keyframes gradientFlow {
@@ -22,6 +24,10 @@ body {
     z-index: -1;
 }
 
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
 /* ============================================================
    GLOBAL SETTINGS — HYBRID NEUMORPHISM + PURPLE GLOW
@@ -33,18 +39,6 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-}
-
-body {
-    background: #f4f4f7;
-    color: #222;
-    overflow-x: hidden;
-    animation: fadeIn 0.6s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================================
@@ -84,7 +78,7 @@ header {
     text-align: center;
     font-size: 30px;
     font-weight: 600;
-    color: #7a3cff;
+    color: #e2d4ff;
     text-shadow: 0 0 12px rgba(160,32,240,0.35);
     animation: headerFloat 6s infinite ease-in-out;
 }
@@ -97,14 +91,16 @@ header {
 /* ============================================================
    NEUMORPHIC PANEL (DARK PURPLE)
 ============================================================ */
-.panel {
+.panel,
+.item-container,
+.admin-box {
     background: #241b3a;
     border-radius: 22px;
     padding: 22px;
+    color: #fff;
     box-shadow:
         10px 10px 20px #1a132c,
         -10px -10px 20px #2e2348;
-    color: #fff;
     animation: panelFloat 5s infinite ease-in-out;
 }
 
@@ -170,7 +166,6 @@ header {
     transform: scale(1.05);
 }
 
-/* STOCK BADGE */
 .stock-badge {
     margin-top: 8px;
     font-size: 0.9rem;
@@ -180,19 +175,6 @@ header {
 /* ============================================================
    ITEM PAGE
 ============================================================ */
-.item-container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 25px;
-    background: #241b3a;
-    border-radius: 22px;
-    color: #fff;
-    box-shadow:
-        10px 10px 20px #1a132c,
-        -10px -10px 20px #2e2348;
-    animation: panelFloat 5s infinite ease-in-out;
-}
-
 .item-img {
     width: 100%;
     border-radius: 18px;
@@ -265,12 +247,12 @@ header {
     box-shadow:
         6px 6px 12px #1a132c,
         -6px -6px 12px #3a2c5a,
-        0 0 12px rgba(184,140,255,0.4); /* idle lavender */
+        0 0 12px rgba(184,140,255,0.4);
 }
 
 .btn:hover {
     box-shadow:
-        0 0 25px rgba(160,32,240,0.85), /* neon hover */
+        0 0 25px rgba(160,32,240,0.85),
         0 0 45px rgba(160,32,240,0.55);
     transform: translateY(-4px) scale(1.03);
 }
@@ -279,7 +261,6 @@ header {
     transform: scale(0.97);
 }
 
-/* INSTAGRAM BUTTON */
 .btn-instagram {
     display: flex;
     align-items: center;
@@ -321,19 +302,6 @@ header {
 /* ============================================================
    ADMIN PANEL
 ============================================================ */
-.admin-box {
-    background: #241b3a;
-    padding: 22px;
-    border-radius: 22px;
-    margin: 25px auto;
-    max-width: 600px;
-    color: #fff;
-    box-shadow:
-        10px 10px 20px #1a132c,
-        -10px -10px 20px #2e2348;
-    animation: panelFloat 5s infinite ease-in-out;
-}
-
 .admin-products img {
     max-width: 90px;
     border-radius: 12px;
