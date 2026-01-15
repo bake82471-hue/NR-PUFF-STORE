@@ -9,24 +9,27 @@
     <meta name="creator" content="Karim Moubarak">
     <meta name="publisher" content="Karim Moubarak">
 
-    <title>NR PUFF STORE - Admin</title>
+    <title>NR PUFF STORE • Area Amministratore</title>
 
     <link rel="icon" href="assets/favicon.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Animated Background -->
+    <!-- LIVE BACKGROUND -->
+    <div class="live-glow"></div>
+
+    <!-- Optional smoke layer -->
     <div class="smoke"></div>
 
     <!-- Header -->
-    <header>Pannello Admin</header>
+    <header>Area Amministratore</header>
 
     <!-- LOGIN BOX -->
     <div id="login-box" class="admin-box">
-        <h2>Accesso Admin</h2>
+        <h2>Accesso amministratore</h2>
 
-        <label>Username</label>
+        <label>Nome utente</label>
         <input type="text" id="admin-user">
 
         <label>Password</label>
@@ -45,14 +48,14 @@
             <label>Username Instagram</label>
             <input type="text" id="insta-user">
 
-            <button onclick="saveInstagram()" class="btn">Salva Username</button>
+            <button onclick="saveInstagram()" class="btn">Salva impostazioni</button>
         </div>
 
         <!-- Add / Edit Product -->
         <div class="admin-box">
-            <h3 id="form-title">Aggiungi Prodotto</h3>
+            <h3 id="form-title">Nuovo prodotto</h3>
 
-            <label>Nome</label>
+            <label>Nome del prodotto</label>
             <input type="text" id="p-name">
 
             <label>Descrizione</label>
@@ -61,10 +64,10 @@
             <label>Prezzo (€)</label>
             <input type="number" id="p-price">
 
-            <label>Stock</label>
+            <label>Stock disponibile</label>
             <input type="number" id="p-stock">
 
-            <label>Immagine (File)</label>
+            <label>Immagine (file)</label>
             <input type="file" id="p-image-file" accept="image/*">
 
             <label>Oppure URL immagine</label>
@@ -72,17 +75,17 @@
 
             <!-- Preview -->
             <div id="preview-box" style="display:none;">
-                <p>Anteprima:</p>
+                <p>Anteprima immagine</p>
                 <img id="preview-img" src="">
             </div>
 
-            <button onclick="submitItem()" class="btn">Salva</button>
-            <button onclick="resetForm()" class="btn btn-red" id="cancel-edit" style="display:none;">Annulla Modifica</button>
+            <button onclick="submitItem()" class="btn">Salva prodotto</button>
+            <button onclick="resetForm()" class="btn btn-red" id="cancel-edit" style="display:none;">Annulla modifica</button>
         </div>
 
         <!-- Product List -->
         <div class="admin-box">
-            <h3>Prodotti Esistenti</h3>
+            <h3>Catalogo prodotti</h3>
             <div id="admin-products" class="admin-products"></div>
         </div>
 
