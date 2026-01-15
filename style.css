@@ -1,5 +1,18 @@
 /* ============================================================
-   LIVE BACKGROUND — ANIMATED GRADIENT WAVES (MEDIUM SPEED)
+   GLOBAL FONT UPGRADE — INTER + POPPINS (PREMIUM)
+============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    letter-spacing: 0.3px;
+}
+
+/* ============================================================
+   LIVE BACKGROUND — ANIMATED GRADIENT WAVES
 ============================================================ */
 body {
     background: linear-gradient(120deg, #6a00ff, #8a2be2, #4b0082, #6a00ff);
@@ -15,7 +28,12 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-/* Optional: stronger glow behind content */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Glow overlay */
 .live-glow {
     position: fixed;
     inset: 0;
@@ -24,62 +42,100 @@ body {
     z-index: -1;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
 /* ============================================================
-   GLOBAL SETTINGS — HYBRID NEUMORPHISM + PURPLE GLOW
+   FLOATING GLASS NAVBAR — FULL VERSION
 ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* ============================================================
-   BACKGROUND PARTICLES (UPGRADED)
-============================================================ */
-.smoke {
+.glass-navbar {
     position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -1;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    max-width: 1100px;
+    padding: 14px 22px;
+
+    background: rgba(24, 16, 48, 0.55);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    box-shadow:
+        0 0 18px rgba(160,32,240,0.45),
+        0 0 35px rgba(160,32,240,0.25);
+
+    z-index: 9999;
+    animation: navbarFade 0.8s ease forwards;
 }
 
-.smoke span {
-    position: absolute;
-    bottom: -10%;
-    width: 45px;
-    height: 45px;
-    background: radial-gradient(circle, rgba(160,32,240,0.18), transparent);
-    border-radius: 50%;
-    filter: blur(20px);
-    animation: floatParticle 14s infinite ease-in-out;
-    opacity: 0.6;
+@keyframes navbarFade {
+    from { opacity: 0; transform: translate(-50%, -10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
 }
 
-@keyframes floatParticle {
-    0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.4; }
-    50% { opacity: 0.9; }
-    100% { transform: translateY(-130vh) translateX(60px) scale(1.9); opacity: 0; }
+.nav-logo {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e8d9ff;
+    cursor: pointer;
+    text-shadow: 0 0 12px rgba(160,32,240,0.55);
+    transition: 0.3s ease;
+}
+
+.nav-logo:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 18px rgba(160,32,240,0.85);
+}
+
+.nav-right {
+    display: flex;
+    gap: 14px;
+}
+
+.nav-btn {
+    padding: 10px 18px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+
+    background: rgba(255,255,255,0.08);
+    color: #f5eaff;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+        inset 0 0 12px rgba(160,32,240,0.25),
+        0 0 12px rgba(160,32,240,0.35);
+
+    transition: 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.nav-btn:hover {
+    background: rgba(255,255,255,0.15);
+    box-shadow:
+        0 0 18px rgba(160,32,240,0.75),
+        0 0 35px rgba(160,32,240,0.45);
+    transform: translateY(-3px) scale(1.05);
 }
 
 /* ============================================================
-   HEADER
+   HEADER (FLOATING TITLE)
 ============================================================ */
 header {
     width: 100%;
-    padding: 25px;
+    padding: 90px 25px 25px 25px;
     text-align: center;
-    font-size: 30px;
-    font-weight: 600;
-    color: #e2d4ff;
-    text-shadow: 0 0 12px rgba(160,32,240,0.35);
+    font-size: 34px;
+    font-weight: 700;
+    color: #f3eaff;
+    text-shadow: 0 0 18px rgba(160,32,240,0.45);
     animation: headerFloat 6s infinite ease-in-out;
 }
 
@@ -89,24 +145,31 @@ header {
 }
 
 /* ============================================================
-   NEUMORPHIC PANEL (DARK PURPLE)
+   GLASS PANELS (ITEM + ADMIN + GENERAL)
 ============================================================ */
 .panel,
 .item-container,
 .admin-box {
-    background: #241b3a;
+    background: rgba(24, 16, 48, 0.55);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+
     border-radius: 22px;
     padding: 22px;
     color: #fff;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
     box-shadow:
-        10px 10px 20px #1a132c,
-        -10px -10px 20px #2e2348;
+        0 0 25px rgba(160,32,240,0.35),
+        inset 0 0 12px rgba(255,255,255,0.05);
+
     animation: panelFloat 5s infinite ease-in-out;
 }
 
 @keyframes panelFloat {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    50% { transform: translateY(-4px); }
 }
 
 /* ============================================================
@@ -127,31 +190,32 @@ header {
 }
 
 /* ============================================================
-   PRODUCT CARD — NEUMORPHIC + GLOW
+   PRODUCT CARD — GLASS + NEON + PARALLAX
 ============================================================ */
 .card {
-    background: #241b3a;
+    background: rgba(24, 16, 48, 0.55);
+    backdrop-filter: blur(14px);
     border-radius: 22px;
     padding: 20px;
     color: #fff;
     cursor: pointer;
-    box-shadow:
-        10px 10px 20px #1a132c,
-        -10px -10px 20px #2e2348;
-    transition: 0.35s ease;
-    animation: cardIdle 4s infinite ease-in-out;
-}
 
-@keyframes cardIdle {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-6px) scale(1.02); }
+    border: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 0 20px rgba(160,32,240,0.35),
+        inset 0 0 12px rgba(255,255,255,0.05);
+
+    transition: 0.35s ease;
+    transform-style: preserve-3d;
+    perspective: 800px;
 }
 
 .card:hover {
-    transform: translateY(-12px) scale(1.05);
+    transform: translateY(-12px) scale(1.05) rotateX(6deg) rotateY(-4deg);
     box-shadow:
-        0 0 25px rgba(160,32,240,0.65),
-        0 0 45px rgba(160,32,240,0.45);
+        0 0 35px rgba(160,32,240,0.75),
+        0 0 55px rgba(160,32,240,0.45);
 }
 
 .card img {
@@ -189,8 +253,8 @@ header {
 }
 
 .item-title {
-    font-size: 1.8rem;
-    font-weight: 600;
+    font-size: 1.9rem;
+    font-weight: 700;
     margin-bottom: 10px;
     animation: textBreath 4s infinite ease-in-out;
 }
@@ -206,32 +270,37 @@ header {
 }
 
 /* ============================================================
-   QUANTITY SPINNER
+   INPUTS (GLASS)
 ============================================================ */
-.qty-box input {
+input, textarea {
     width: 100%;
     padding: 12px;
     border-radius: 12px;
     border: none;
-    background: #2e2348;
+
+    background: rgba(255,255,255,0.08);
     color: #fff;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    margin-top: 10px;
+
     box-shadow:
-        inset 6px 6px 12px #1a132c,
-        inset -6px -6px 12px #3a2c5a;
-    margin-top: 8px;
-    font-size: 1rem;
+        inset 0 0 12px rgba(0,0,0,0.35),
+        0 0 12px rgba(160,32,240,0.25);
+
     transition: 0.3s ease;
 }
 
-.qty-box input:hover {
+input:focus, textarea:focus {
     box-shadow:
-        inset 6px 6px 12px #1a132c,
-        inset -6px -6px 12px #3a2c5a,
-        0 0 20px rgba(160,32,240,0.55);
+        inset 0 0 12px rgba(0,0,0,0.45),
+        0 0 25px rgba(160,32,240,0.75);
 }
 
 /* ============================================================
-   BUTTONS — MIXED GLOW SYSTEM
+   BUTTONS — NEON GLOW
 ============================================================ */
 .btn {
     width: 100%;
@@ -241,13 +310,17 @@ header {
     font-size: 1rem;
     cursor: pointer;
     margin-top: 12px;
-    transition: 0.3s ease;
-    background: #2e2348;
+
+    background: rgba(255,255,255,0.08);
     color: #fff;
+
+    backdrop-filter: blur(12px);
+
     box-shadow:
-        6px 6px 12px #1a132c,
-        -6px -6px 12px #3a2c5a,
-        0 0 12px rgba(184,140,255,0.4);
+        0 0 12px rgba(184,140,255,0.4),
+        inset 0 0 12px rgba(255,255,255,0.05);
+
+    transition: 0.3s ease;
 }
 
 .btn:hover {
@@ -261,6 +334,7 @@ header {
     transform: scale(0.97);
 }
 
+/* Instagram button */
 .btn-instagram {
     display: flex;
     align-items: center;
@@ -271,18 +345,19 @@ header {
 /* ============================================================
    COMMENTS
 ============================================================ */
-.comments-box {
-    margin-top: 20px;
-}
-
 .comment-box {
-    background: #2e2348;
+    background: rgba(24, 16, 48, 0.55);
+    backdrop-filter: blur(14px);
     padding: 16px;
     border-radius: 16px;
     margin-top: 12px;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
     box-shadow:
-        6px 6px 12px #1a132c,
-        -6px -6px 12px #3a2c5a;
+        0 0 20px rgba(160,32,240,0.35),
+        inset 0 0 12px rgba(255,255,255,0.05);
+
     animation: commentFade 0.6s ease forwards;
     opacity: 0;
 }
@@ -290,13 +365,6 @@ header {
 @keyframes commentFade {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-.comment-box:hover {
-    box-shadow:
-        0 0 20px rgba(160,32,240,0.55),
-        0 0 35px rgba(160,32,240,0.35);
-    transform: translateY(-4px);
 }
 
 /* ============================================================
@@ -310,40 +378,20 @@ header {
 }
 
 /* ============================================================
-   INPUTS
-============================================================ */
-input, textarea {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
-    background: #2e2348;
-    color: #fff;
-    margin-top: 10px;
-    box-shadow:
-        inset 6px 6px 12px #1a132c,
-        inset -6px -6px 12px #3a2c5a;
-    transition: 0.3s ease;
-}
-
-input:focus, textarea:focus {
-    box-shadow:
-        inset 6px 6px 12px #1a132c,
-        inset -6px -6px 12px #3a2c5a,
-        0 0 25px rgba(160,32,240,0.75);
-}
-
-/* ============================================================
    PREVIEW IMAGE
 ============================================================ */
 #preview-box {
-    background: #2e2348;
+    background: rgba(24, 16, 48, 0.55);
+    backdrop-filter: blur(14px);
     padding: 14px;
     border-radius: 14px;
     margin-top: 12px;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
     box-shadow:
-        inset 6px 6px 12px #1a132c,
-        inset -6px -6px 12px #3a2c5a;
+        inset 0 0 12px rgba(255,255,255,0.05),
+        0 0 20px rgba(160,32,240,0.45);
 }
 
 #preview-img {
