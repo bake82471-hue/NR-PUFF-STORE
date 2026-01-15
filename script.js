@@ -129,6 +129,8 @@ function loadItemPage() {
     $("#item-desc").textContent = p.desc;
     $("#item-price").textContent = p.price + "€";
     $("#item-stock").textContent = p.stock;
+    setupQuantitySelector(p.stock);
+
 
     $("#order-btn").onclick = () => {
         const qty = $("#qty").value;
