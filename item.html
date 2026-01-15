@@ -19,8 +19,21 @@
 <!-- LIVE BACKGROUND -->
 <div class="live-glow"></div>
 
-<!-- Animated Background (optional smoke layer) -->
+<!-- Smoke Particles -->
 <div class="smoke"></div>
+
+<!-- FLOATING NAVBAR -->
+<nav class="glass-navbar">
+    <div class="nav-left">
+        <span class="nav-logo" onclick="location.href='index.html'">NR PUFF STORE</span>
+    </div>
+
+    <div class="nav-right">
+        <button class="nav-btn" onclick="location.href='index.html'">Products</button>
+        <button class="nav-btn" onclick="location.href='index.html#catalog'">All Items</button>
+        <button class="nav-btn" onclick="location.href='index.html'">Shop</button>
+    </div>
+</nav>
 
 <!-- Header -->
 <header>NR PUFF STORE</header>
@@ -43,10 +56,11 @@
         <p><b>Stock disponibile:</b> <span id="item-stock"></span></p>
     </div>
 
-    <!-- Quantity -->
+    <!-- Quantity Selector (NEW) -->
     <div class="qty-box">
-        <label for="qty">Seleziona quantità</label>
-        <input type="number" id="qty" value="1" min="1">
+        <label>Seleziona quantità</label>
+        <div id="qty-selector" class="qty-selector">1</div>
+        <div id="qty-options" class="qty-options"></div>
     </div>
 
     <!-- Instagram Order Button -->
