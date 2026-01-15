@@ -47,11 +47,10 @@ async function adminLogin() {
     if (data.token) {
         localStorage.setItem("token", data.token);
 
-        // Smooth fade transition
         document.body.style.opacity = "0";
         setTimeout(() => location.reload(), 200);
     } else {
-        alert("Wrong credentials");
+        alert("Credenziali errate");
     }
 }
 
@@ -65,7 +64,6 @@ function initAdminPage() {
         loginBox.style.display = "none";
         dashboard.style.display = "block";
 
-        // Fade-in animation
         dashboard.style.opacity = "0";
         setTimeout(() => dashboard.style.opacity = "1", 50);
 
@@ -101,8 +99,7 @@ async function saveInstagram() {
         instagram_username: instaInput.value
     });
 
-    // Animated confirmation
-    instaInput.style.boxShadow = "0 0 12px #7a3cff";
+    instaInput.style.boxShadow = "0 0 20px rgba(160,32,240,0.8)";
     setTimeout(() => instaInput.style.boxShadow = "none", 600);
 }
 
@@ -197,6 +194,12 @@ async function updateItem(id) {
     loadAdminProducts();
 }
 
+async function deleteItem(id) {
+    if (!confirm("Vuoi davvero eliminare questo prodotto?")) return;
+    await apiAuth("/items/" + id, "DELETE");
+    loadAdminProducts();
+}
+
 async function loadAdminProducts() {
     const box = document.getElementById("admin-products");
     if (!box) return;
@@ -206,26 +209,22 @@ async function loadAdminProducts() {
 
     products.forEach((p, i) => {
         const div = document.createElement("div");
-        div.className = "comment glow";
+        div.className = "comment-box";
         div.style.opacity = "0";
-        div.style.transform = "translateY(10px)";
-        div.style.transition = "0.3s ease";
 
         div.innerHTML = `
             <b>${p.name}</b><br>
             Prezzo: ${p.price}€<br>
             Stock: ${p.stock}<br>
-            ${p.image ? `<img src="${p.image}" style="max-width:80px; margin-top:5px; border-radius:6px;"><br>` : ""}
-            <button onclick="editItem(${p.id})" class="btn btn-purple glow" style="margin-top:10px;">Modifica</button>
-            <button onclick="deleteItem(${p.id})" class="btn btn-red glow" style="margin-top:10px;">Elimina</button>
+            ${p.image ? `<img src="${p.image}"><br>` : ""}
+            <button onclick="editItem(${p.id})" class="btn">Modifica</button>
+            <button onclick="deleteItem(${p.id})" class="btn btn-red">Elimina</button>
         `;
 
         box.appendChild(div);
 
-        // Staggered fade-in animation
         setTimeout(() => {
             div.style.opacity = "1";
-            div.style.transform = "translateY(0)";
         }, i * 80);
     });
 }
@@ -252,12 +251,6 @@ async function editItem(id) {
         previewBox.style.opacity = "0";
         setTimeout(() => previewBox.style.opacity = "1", 50);
     }
-}
-
-async function deleteItem(id) {
-    if (!confirm("Sei sicuro di voler eliminare questo prodotto?")) return;
-    await apiAuth("/items/" + id, "DELETE");
-    loadAdminProducts();
 }
 
 
@@ -303,7 +296,7 @@ async function loadItemPage() {
     if (item.stock <= 0) {
         qtyInput.value = 0;
         qtyInput.disabled = true;
-        orderBtn.innerText = "Out of stock";
+        orderBtn.innerText = "Non disponibile";
         orderBtn.disabled = true;
     } else {
         updateOrderButton(item, 1);
@@ -312,7 +305,6 @@ async function loadItemPage() {
 
     loadComments(currentItemId);
 
-    // Fade-in animation
     document.getElementById("item-container").style.opacity = "0";
     setTimeout(() => {
         document.getElementById("item-container").style.opacity = "1";
@@ -336,13 +328,34 @@ function updateOrderButton(item, qty) {
 
     orderBtn.innerText = `Ordina su Instagram (${qty} x ${item.price}€ = ${total}€)`;
 
-    orderBtn.onclick = () => {
+    orderBtn.onclick = async () => {
         if (!INSTAGRAM_USER) {
-            alert("Instagram username is not configured yet.");
+            alert("Username Instagram non configurato.");
             return;
         }
+
+        await reduceStock(item.id, qty);
+
         window.location.href = `https://instagram.com/${INSTAGRAM_USER}`;
     };
+}
+
+async function reduceStock(id, qty) {
+    try {
+        await apiAuth(`/items/${id}/stock`, "PUT", { qty });
+
+        const newItem = await apiGet("/items/" + id);
+
+        document.getElementById("item-stock").innerText = newItem.stock;
+
+        if (newItem.stock <= 0) {
+            document.getElementById("qty").disabled = true;
+            document.getElementById("order-btn").disabled = true;
+            document.getElementById("order-btn").innerText = "Non disponibile";
+        }
+    } catch (err) {
+        console.error("Errore aggiornamento stock", err);
+    }
 }
 
 
@@ -365,7 +378,7 @@ async function loadComments(itemId) {
     box.innerHTML = "";
 
     if (!Array.isArray(comments) || comments.length === 0) {
-        box.innerHTML = "<p>No comments yet.</p>";
+        box.innerHTML = "<p>Nessun commento.</p>";
         return;
     }
 
@@ -373,20 +386,16 @@ async function loadComments(itemId) {
         const div = document.createElement("div");
         div.className = "comment-box";
         div.style.opacity = "0";
-        div.style.transform = "translateY(10px)";
-        div.style.transition = "0.3s ease";
 
         div.innerHTML = `
             <b>${c.username}</b> <span style="opacity:0.6;">(${c.date})</span>
             <p>${c.comment}</p>
-            <hr>
         `;
 
         box.appendChild(div);
 
         setTimeout(() => {
             div.style.opacity = "1";
-            div.style.transform = "translateY(0)";
         }, i * 80);
     });
 }
@@ -396,23 +405,17 @@ async function sendComment() {
     const comment = document.getElementById("c-text")?.value.trim();
 
     if (!username || !comment) {
-        alert("Enter your name and comment");
+        alert("Inserisci nome e commento");
         return;
     }
 
-    let updatedComments = [];
-
     try {
-        const res = await fetch(`${API}/comments/${currentItemId}`, {
+        await fetch(`${API}/comments/${currentItemId}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, comment })
         });
-
-        updatedComments = await res.json();
-    } catch {
-        updatedComments = [];
-    }
+    } catch {}
 
     loadComments(currentItemId);
 
@@ -435,22 +438,20 @@ async function loadHomePage() {
         const div = document.createElement("div");
         div.className = "card";
         div.style.opacity = "0";
-        div.style.transform = "translateY(10px)";
-        div.style.transition = "0.3s ease";
 
         div.onclick = () => location.href = `item.html?id=${p.id}`;
 
         div.innerHTML = `
-            <img src="${p.image}" class="card-img">
+            <img src="${p.image}">
             <h3>${p.name}</h3>
             <p>${p.price}€</p>
+            <div class="stock-badge">Stock: ${p.stock} pezzi</div>
         `;
 
         grid.appendChild(div);
 
         setTimeout(() => {
             div.style.opacity = "1";
-            div.style.transform = "translateY(0)";
         }, i * 80);
     });
 }
