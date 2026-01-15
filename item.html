@@ -9,70 +9,72 @@
     <meta name="creator" content="Karim Moubarak">
     <meta name="publisher" content="Karim Moubarak">
 
-    <title>NR PUFF STORE - Prodotto</title>
+    <title>NR PUFF STORE • Dettagli Prodotto</title>
 
     <link rel="icon" href="assets/favicon.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<!-- LIVE BACKGROUND -->
 <div class="live-glow"></div>
 
-    <!-- Animated Background -->
-    <div class="smoke"></div>
+<!-- Animated Background (optional smoke layer) -->
+<div class="smoke"></div>
 
-    <!-- Header -->
-    <header>NR PUFF STORE</header>
+<!-- Header -->
+<header>NR PUFF STORE</header>
 
-    <!-- PRODUCT CONTAINER -->
-    <div id="item-container" class="item-container">
+<!-- PRODUCT CONTAINER -->
+<div id="item-container" class="item-container">
 
-        <!-- Product Image -->
-        <img id="item-img" class="item-img" src="" alt="Prodotto">
+    <!-- Product Image -->
+    <img id="item-img" class="item-img" src="" alt="Immagine prodotto">
 
-        <!-- Product Title -->
-        <h2 id="item-name" class="item-title"></h2>
+    <!-- Product Title -->
+    <h2 id="item-name" class="item-title"></h2>
 
-        <!-- Description -->
-        <p id="item-desc" class="item-desc"></p>
+    <!-- Description -->
+    <p id="item-desc" class="item-desc"></p>
 
-        <!-- Price & Stock -->
-        <div class="item-info">
-            <p><b>Prezzo:</b> <span id="item-price"></span></p>
-            <p><b>Disponibilità:</b> <span id="item-stock"></span></p>
-        </div>
-
-        <!-- Quantity -->
-        <div class="qty-box">
-            <label for="qty">Quantità</label>
-            <input type="number" id="qty" value="1" min="1">
-        </div>
-
-        <!-- Instagram Order Button -->
-        <button id="order-btn" class="btn btn-instagram">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="insta-icon" style="width:22px; height:22px;">
-            Ordina su Instagram
-        </button>
-
-        <hr class="divider" style="margin:20px 0; opacity:0.3;">
-
-        <!-- Comments Section -->
-        <h3 class="comments-title">Commenti</h3>
-
-        <div id="comments" class="comments-box"></div>
-
-        <!-- Add Comment -->
-        <div class="comment-form" style="margin-top:18px;">
-            <label>Nome</label>
-            <input type="text" id="c-username">
-
-            <label>Commento</label>
-            <textarea id="c-text"></textarea>
-
-            <button onclick="sendComment()" class="btn">Invia Commento</button>
-        </div>
-
+    <!-- Price & Stock -->
+    <div class="item-info">
+        <p><b>Prezzo attuale:</b> <span id="item-price"></span></p>
+        <p><b>Stock disponibile:</b> <span id="item-stock"></span></p>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Quantity -->
+    <div class="qty-box">
+        <label for="qty">Seleziona quantità</label>
+        <input type="number" id="qty" value="1" min="1">
+    </div>
+
+    <!-- Instagram Order Button -->
+    <button id="order-btn" class="btn btn-instagram">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="insta-icon" style="width:22px; height:22px;">
+        Procedi all’ordine su Instagram
+    </button>
+
+    <hr class="divider" style="margin:20px 0; opacity:0.3;">
+
+    <!-- Comments Section -->
+    <h3 class="comments-title">Recensioni dei clienti</h3>
+
+    <div id="comments" class="comments-box"></div>
+
+    <!-- Add Comment -->
+    <div class="comment-form" style="margin-top:18px;">
+        <label>Il tuo nome</label>
+        <input type="text" id="c-username">
+
+        <label>La tua recensione</label>
+        <textarea id="c-text"></textarea>
+
+        <button onclick="sendComment()" class="btn">Pubblica recensione</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
