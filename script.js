@@ -12,6 +12,30 @@ const load = (key, fallback) => JSON.parse(localStorage.getItem(key)) || fallbac
 // Save data
 const save = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
+function setupQuantitySelector(stock) {
+    const selector = $("#qty-selector");
+    const optionsBox = $("#qty-options");
+
+    // Generate numbers 1 → stock
+    optionsBox.innerHTML = "";
+    for (let i = 1; i <= stock; i++) {
+        const opt = document.createElement("div");
+        opt.textContent = i;
+        opt.onclick = () => {
+            selector.textContent = i;
+            optionsBox.style.display = "none";
+        };
+        optionsBox.appendChild(opt);
+    }
+
+    // Toggle dropdown
+    selector.onclick = () => {
+        optionsBox.style.display =
+            optionsBox.style.display === "block" ? "none" : "block";
+    };
+}
+
+
 /* ============================================================
    NAVBAR ACTIVE STATE
 ============================================================ */
